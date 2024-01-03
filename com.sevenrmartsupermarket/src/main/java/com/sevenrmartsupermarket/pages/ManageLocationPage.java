@@ -14,6 +14,10 @@ public class ManageLocationPage
 	WebDriver driver;
 	PageUtility pageUtility;
 	GeneralUtility generalUtility;
+	PageUtility pageutility;
+	
+	@FindBy(xpath = "//p[text()='Push Notifications']")
+	WebElement ScrollPushnotificationField;
 	
 	@FindBy(xpath="//html//body//div//div[1]//section//div//div//div[11]//div//a")
 	WebElement ManageLocation ;
@@ -41,9 +45,17 @@ public class ManageLocationPage
 		this.driver=driver;
 		PageFactory.initElements(driver,this);
 	}
-	public void verifyManageLocationPage()
+	
+	public void scrollAndClickManageLocationPage()
 	{
-		ManageLocation.click();
+		pageutility=new PageUtility(driver);
+		pageutility.scrollIntoElementView(ScrollPushnotificationField);
+		pageutility.scrollAndClick(ManageLocation);
+		
+	}
+	public void verifyAddNewLocationPage()
+	{
+		
 		AddNewLocation.click();
 		
 	}
@@ -65,17 +77,27 @@ public class ManageLocationPage
 		System.out.println(selectedState);
 		
 	}
-	public void verifyLocation()
+	public void enterLocationAndDeliveryCharge(String location,String amount)
 	{
-		LocationField.click(); 
-		
+		LocationField.sendKeys(location);
+		DeliveryChargeField.sendKeys(amount);
 		
 	}
-	public void verifyDeliveryCharge()
+	public void verifyLocationAndDeliveryCharge(String location,String Amt)
 	{
+		enterLocationAndDeliveryCharge(location,Amt);
+		LocationField.click(); 
 		DeliveryChargeField.click(); 
 		
 	}
+	public void scrollAndSave()
+	{
+		pageutility=new PageUtility(driver);
+		pageutility.scrollIntoElementView(ScrollPushnotificationField);
+		pageutility.scrollAndClick(SaveButton);
+		
+	}
+	
 }
 
 ;

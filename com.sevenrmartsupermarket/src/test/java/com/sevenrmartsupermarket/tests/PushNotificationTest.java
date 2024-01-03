@@ -2,6 +2,7 @@ package com.sevenrmartsupermarket.tests;
 
 import org.testng.annotations.Test;
 import com.sevenrmartsupermarket.base.Base;
+import com.sevenrmartsupermarket.listeners.RetryAnalyzer;
 import com.sevenrmartsupermarket.pages.LoginPage;
 import com.sevenrmartsupermarket.pages.PushNotificationPage;
 import com.sevenrmartsupermarket.utilities.ExcelRead;
@@ -16,7 +17,7 @@ public class PushNotificationTest extends Base
 	String tileData;
 	String descriptionData;
 
-	@Test
+	@Test(groups="smoke",retryAnalyzer = RetryAnalyzer.class)
 	public void verifyDataFromExcel()
 	{
 		pushnotificationpage = new PushNotificationPage(driver);
@@ -33,9 +34,12 @@ public class PushNotificationTest extends Base
 		pushnotificationpage.enterDescription(descriptionData);
 		pushnotificationpage.clickSendKey();
 		
+		boolean actualResult=pushnotificationpage.checkPushNotificationMsg("Message send successfully");
+		Assert.assertTrue(actualResult);
+		
 	}
 		
-		@Test
+		@Test(groups={"regression","smoke"})
 		public void verifyPushNotificationAlertMsg() throws InterruptedException 
 		{
 		pushnotificationpage = new PushNotificationPage(driver);

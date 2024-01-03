@@ -57,7 +57,14 @@ public class ManageDeliveryBoyPage {
 	@FindBy(xpath="//table//tbody//tr//td[1]")
 	List<WebElement>allnames;
 	
+	@FindBy(xpath="//h4[text()='Search List Delivery Boy']")
+	WebElement SearchDeliveryBoy;
 	
+	@FindBy(xpath="//h1[text()='List Delivery Boy']")
+	WebElement ListDeliveryBoy;
+	
+	@FindBy(xpath="//h1[text()='List Delivery Boy']")
+	WebElement EditDeliveryBoy;
 	
 
 	public ManageDeliveryBoyPage(WebDriver driver) {
@@ -109,9 +116,23 @@ public class ManageDeliveryBoyPage {
 	{
 	resetSearchElement.click();	
 	}
-	public void verifyEditButton()
-	{
-	resetSearchElement.click();	
+	public void editUser(String editingPerson)
+	{ int index=0;
+		List<String> names = new ArrayList<String>();
+		generalutility = new GeneralUtility(driver);
+		pageutility=new PageUtility(driver);
+		names = generalutility.getTextOfElements(allnames);
+		System.out.println(names);	
+		for(index=0;index<names.size();index++)
+		{
+			if(editingPerson.equals(names.get(index)))
+			{
+				index++;
+				break;
+			}
+		}
+		
+		WebElement editButton=driver.findElement(By.xpath("//table[@class='table table-bordered table-hover table-sm']//tr["+index+"]//td[8]//a[1]"));
 	}
 	
 	public void deleteDeliveryBoy(String nameOfDeliveryBoy)
@@ -134,7 +155,15 @@ public class ManageDeliveryBoyPage {
 		WebElement editButton=driver.findElement(By.xpath("//table[@class='table table-bordered table-hover table-sm']//tbody//tr["+index+"]//td[8]//a[1]"));
 		pageutility.scrollAndClick(newPassword);
 	}	
+	public String getTextOfSearchDeliveryBoy()
+	{
+		return SearchDeliveryBoy.getText();
+	}
 	
+	public String getTextOfHeadingListDeliveryBoy()
+	{
+		return ListDeliveryBoy.getText();
+	}
 	
 	
 }

@@ -9,48 +9,47 @@ import com.sevenrmartsupermarket.utilities.PageUtility;
 
 public class ManageLocationTest extends Base
 {
-	 LoginPage loginpage;
+	LoginPage loginPage;
 	 ManageLocationPage managelocationpage;
 	  PageUtility pageutility;
+	  ManageLocationDataProvider managelocationprovider;
 	 
 	@Test
 	public void verifyLocationPage()
 	{
-		loginpage = new LoginPage(driver);
-		loginpage.login("admin", "admin");
+		loginPage = new LoginPage(driver);
+		loginPage.login();
 		managelocationpage=new ManageLocationPage(driver);
-		pageutility=new PageUtility(driver);
 		
-		managelocationpage.verifyManageLocationPage();
+		managelocationpage.scrollAndClickManageLocationPage();
 		
 	}
 	@Test
 	public void verifyDropDownLocationPage()
 	{
-		loginpage = new LoginPage(driver);
-		   loginpage.login("admin", "admin");
+		loginPage = new LoginPage(driver);
+		loginPage.login();
 		managelocationpage=new ManageLocationPage(driver);
-		pageutility=new PageUtility(driver);
+		
 	
-		managelocationpage.verifyManageLocationPage();
+		managelocationpage.scrollAndClickManageLocationPage();
+		managelocationpage.verifyAddNewLocationPage();
 		managelocationpage.verifyCountry();
 		managelocationpage.verifyState();
 	}
 	@Test(dataProvider = "Location",dataProviderClass =ManageLocationDataProvider.class)
-	public void verifyLocation()
+	public void verifyLocation(String location,String Amt)
 	{
-		loginpage=new LoginPage(driver);
+		loginPage = new LoginPage(driver);
+		loginPage.login();
 		managelocationpage=new ManageLocationPage(driver);
-	
-		managelocationpage.verifyLocation();
 		
+		managelocationpage.scrollAndClickManageLocationPage();
+		managelocationpage.verifyAddNewLocationPage();
+		managelocationpage.verifyCountry();
+		managelocationpage.verifyState();
+		managelocationpage.verifyLocationAndDeliveryCharge(location,Amt);
+		managelocationpage.scrollAndSave();
 	}
-	@Test(dataProvider = "DeliveryCharge",dataProviderClass =ManageLocationDataProvider.class)
-	public void verifyDeliveryCharge()
-	{
-		loginpage=new LoginPage(driver);
-		managelocationpage=new ManageLocationPage(driver);
 	
-		managelocationpage.verifyDeliveryCharge();
-	}
 }

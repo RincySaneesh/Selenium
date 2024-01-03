@@ -55,32 +55,13 @@ public class ManageDeliveryBoyTest extends Base
 		managedeliveryboypage.verifyUserName(username);
 		managedeliveryboypage.verifyPassword(password);
 		managedeliveryboypage.clickonSaveButton();
-		
-	}
-
-	@Test
-	public void verifyNewDeliveryBoyDetailsAddedAlertMsg() throws InterruptedException {
-		managedeliveryboypage = new ManageDeliveryBoyPage(driver);
-		excelRead.setExcelFile("ManageDeliveryBoy", "SignUp");
-		loginPage = new LoginPage(driver);
-		loginPage.login();
-
-		name = excelRead.getCellData(3, 0);
-		username = excelRead.getCellData(3, 1);
-		password = excelRead.getCellData(3, 2);
-		
-		managedeliveryboypage.verifyManageDeliveryBoy();
-		managedeliveryboypage.addDeliveryBoy();
-		managedeliveryboypage.verifyName(name);
-		managedeliveryboypage.verifyUserName(username);
-		managedeliveryboypage.verifyPassword(password);
-		managedeliveryboypage.clickonSaveButton();
-		
-		Thread.sleep(3000);
+	
 		
 		boolean actualResult=managedeliveryboypage.checkDeliveryBoyRegisterMsg("Delivery Boy Details Created Successfully");
 		Assert.assertTrue(actualResult);
 	}
+
+	
 	@Test
 	public void verifySearchButtonFeatures()
 	{
@@ -88,7 +69,11 @@ public class ManageDeliveryBoyTest extends Base
 		loginPage = new LoginPage(driver);
 		loginPage.login();
 		managedeliveryboypage.verifyManageDeliveryBoy();
-		managedeliveryboypage.verifyClickSearchButton("Eldriya");
+		managedeliveryboypage.verifyClickSearchButton("name6");
+		
+		String expectedText="Search List Delivery Boy";
+		String actualText=managedeliveryboypage.getTextOfSearchDeliveryBoy();
+		Assert.assertEquals(actualText, expectedText);
 	}
 	
 	@Test
@@ -100,6 +85,30 @@ public class ManageDeliveryBoyTest extends Base
 		managedeliveryboypage.verifyManageDeliveryBoy();
 		managedeliveryboypage.verifyClickSearchButton("Eldriya");
 		managedeliveryboypage.verifyResetButton();
+		
+		String expectedText="List Delivery Boy";
+		String actualText=managedeliveryboypage.getTextOfHeadingListDeliveryBoy();
+		Assert.assertEquals(actualText, expectedText);
+		
+	}
+	
+	public void verify_ClickNameDelete()
+	{
+		loginPage = new LoginPage(driver);
+		loginPage.login();
+		managedeliveryboypage=new ManageDeliveryBoyPage(driver);
+		managedeliveryboypage.verifyManageDeliveryBoy();
+		managedeliveryboypage.deleteDeliveryBoy("client29/12/2023 11:52:17");
+		
+	}
+	public void verify_editUser()
+	{
+		loginPage = new LoginPage(driver);
+		loginPage.login();
+		managedeliveryboypage=new ManageDeliveryBoyPage(driver);
+		managedeliveryboypage.verifyManageDeliveryBoy();
+		managedeliveryboypage.editUser("client29/12/2023 11:43:43");
+		
 	}
 	
 }
