@@ -18,9 +18,10 @@ public class HomeTest extends Base
 		homepage=new HomePage(driver);
 		loginpage.login();
 		homepage.logout();
+		
 		String expectedText="7rmart supermarket";
 		String actualText=homepage.superMarketGetext();	
-	Assert.assertEquals(actualText,expectedText);
+		Assert.assertEquals(actualText,expectedText);
 	}
 
 }

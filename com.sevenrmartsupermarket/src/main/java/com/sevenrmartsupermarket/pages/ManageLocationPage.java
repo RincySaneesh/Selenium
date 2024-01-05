@@ -40,6 +40,9 @@ public class ManageLocationPage
 	@FindBy(xpath="//button[@name='create']")
 	WebElement SaveButton;
 	
+	@FindBy(xpath="//div[@class='alert alert-success alert-dismissible']")
+	WebElement LocationAddedAlertMsg;
+	
 	public ManageLocationPage(WebDriver driver)
 	{
 		this.driver=driver;
@@ -53,13 +56,13 @@ public class ManageLocationPage
 		pageutility.scrollAndClick(ManageLocation);
 		
 	}
-	public void verifyAddNewLocationPage()
+	public void clikAddNewLocation()
 	{
 		
 		AddNewLocation.click();
 		
 	}
-	public void verifyCountry()
+	public void selectCountry()
 	{
 		CountryField.click(); 
 		Select countryDropDown=new Select(CountryField);
@@ -68,7 +71,7 @@ public class ManageLocationPage
 		System.out.println(selectedCountry);
 		
 	}
-	public void verifyState()
+	public void selectState()
 	{
 		StateField.click(); 
 		Select StateDropDown=new Select(StateField);
@@ -97,7 +100,16 @@ public class ManageLocationPage
 		pageutility.scrollAndClick(SaveButton);
 		
 	}
+	public String getTextOfHeadingAddLocation()
+	{
+		return AddNewLocation.getText();
+	}
 	
+	public boolean alertLocationCreated(String message)
+	{
+		generalUtility=new GeneralUtility(driver);
+		return generalUtility.isWordPresent(LocationAddedAlertMsg,message);	
+	}
 }
 
 ;

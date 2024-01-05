@@ -1,5 +1,6 @@
 package com.sevenrmartsupermarket.tests;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import com.sevenrmartsupermarket.base.Base;
 import com.sevenrmartsupermarket.pages.LoginPage;
@@ -13,7 +14,7 @@ public class ManageOfferCodeTest extends Base
 	  PageUtility pageutility;
 	  
 	  @Test
-	  public void verify_NewOffer() 
+	  public void verifyaddNewOffer() 
 	  {
 	   loginpage = new LoginPage(driver);
 	   loginpage.login("admin", "admin");
@@ -29,6 +30,9 @@ public class ManageOfferCodeTest extends Base
 	    addoffercodepage.imageUpload();
 	    addoffercodepage.clickonSaveButton();
 	    
+	    boolean actualResult=addoffercodepage.OfferCreatedAlert("Offer Created Successfully");
+		Assert.assertTrue(actualResult);
+	    
 	  }
 	  
 	  @Test
@@ -38,18 +42,26 @@ public class ManageOfferCodeTest extends Base
 		   loginpage.login("admin", "admin");
 		   addoffercodepage=new ManageOfferCodePage(driver);
 		   addoffercodepage.ClickOnMoreInfo();
-		   addoffercodepage.verifyClickSearchButton("TestOfferCD656");
+		   addoffercodepage.ClickSearchButton("TestOfferCD656");
+		   
+		    String expectedText="List Offercodes";
+			String actualText=addoffercodepage.getTextOfHeadingSearchListOfferCode();
+			Assert.assertEquals(actualText, expectedText);
 		}
 		
 		@Test
-		public void verifySearchReset()
+		public void verifyResetInsideSearch()
 		{
-			loginpage = new LoginPage(driver);
-			  loginpage.login("admin", "admin");
+			   loginpage = new LoginPage(driver);
+			   loginpage.login("admin", "admin");
 			   addoffercodepage=new ManageOfferCodePage(driver);
 			   addoffercodepage.ClickOnMoreInfo();
-			   addoffercodepage.verifyClickSearchButton("TestOfferCD484");
-			   addoffercodepage.verifyResetButton();
+			   addoffercodepage.ClickSearchButton("TestOfferCD484");
+			   addoffercodepage.clickReset();
+			   
+			    String expectedText="List Offercodes";
+				String actualText=addoffercodepage.getTextOfHeadingSearchListOfferCode();
+				Assert.assertEquals(actualText, expectedText);
 		}
 		
 }

@@ -8,107 +8,118 @@ import com.sevenrmartsupermarket.pages.ManageDeliveryBoyPage;
 import com.sevenrmartsupermarket.utilities.ExcelRead;
 import com.sevenrmartsupermarket.utilities.PageUtility;
 
-public class ManageDeliveryBoyTest extends Base 
+public class ManageDeliveryBoyTest extends Base
 {
-	
-		ManageDeliveryBoyPage managedeliveryboypage;
-		LoginPage loginPage;
-		PageUtility pageutility;
-		ExcelRead excelRead = new ExcelRead();
+			ManageDeliveryBoyPage managedeliveryboypage;
+			LoginPage loginPage;
+			PageUtility pageutility;
+			ExcelRead excelRead = new ExcelRead();
 
-	
-	String name;
-	String username;
-	String password;
-	
-	@Test
-	public void verifyManageDeliveryBoyPage() {
-		managedeliveryboypage = new ManageDeliveryBoyPage(driver);
-		loginPage = new LoginPage(driver);
-		loginPage.login();
-		managedeliveryboypage.verifyManageDeliveryBoy();
-
-	}
-
-	@Test
-	public void verifyAddDeliveryBoyFromExcel()
-	{
-		managedeliveryboypage = new ManageDeliveryBoyPage(driver);
-		loginPage = new LoginPage(driver);
-		loginPage.login();
-		pageutility=new PageUtility(driver);
 		
-		excelRead.setExcelFile("ManageDeliveryBoy", "SignUp");
+		String name;
+		String username;
+		String password;
+		
+		@Test
+		public void verifyManageDeliveryBoyPage() {
+			managedeliveryboypage = new ManageDeliveryBoyPage(driver);
+			loginPage = new LoginPage(driver);
+			loginPage.login();
+			managedeliveryboypage.clickManageDeliveryBoy();
+			
+			String expectedText="Add-Delivery Boy";
+			String actualText=managedeliveryboypage.getTextOfHeadingAddDeliveryBoy();
+			Assert.assertEquals(actualText, expectedText);
 
-		name = excelRead.getCellData(2, 0);
-		System.out.println(name);
+		}
 
-		username = excelRead.getCellData(2, 1);
-		System.out.println(username);
+		@Test
+		public void verifyAddDeliveryBoyFromExcel()
+		{
+			managedeliveryboypage = new ManageDeliveryBoyPage(driver);
+			loginPage = new LoginPage(driver);
+			loginPage.login();
+			pageutility=new PageUtility(driver);
+			
+			excelRead.setExcelFile("ManageDeliveryBoy", "SignUp");
 
-		password = excelRead.getCellData(2, 2);
-		System.out.println(password);
+			name = excelRead.getCellData(2, 0);
+			System.out.println(name);
 
-		managedeliveryboypage.verifyManageDeliveryBoy();
-		managedeliveryboypage.addDeliveryBoy();
-		managedeliveryboypage.verifyName(name);
-		managedeliveryboypage.verifyUserName(username);
-		managedeliveryboypage.verifyPassword(password);
-		managedeliveryboypage.clickonSaveButton();
-	
-		
-		boolean actualResult=managedeliveryboypage.checkDeliveryBoyRegisterMsg("Delivery Boy Details Created Successfully");
-		Assert.assertTrue(actualResult);
-	}
+			username = excelRead.getCellData(2, 1);
+			System.out.println(username);
 
-	
-	@Test
-	public void verifySearchButtonFeatures()
-	{
-		managedeliveryboypage = new ManageDeliveryBoyPage(driver);
-		loginPage = new LoginPage(driver);
-		loginPage.login();
-		managedeliveryboypage.verifyManageDeliveryBoy();
-		managedeliveryboypage.verifyClickSearchButton("name6");
+			password = excelRead.getCellData(2, 2);
+			System.out.println(password);
+
+			managedeliveryboypage.clickManageDeliveryBoy();
+			managedeliveryboypage.addDeliveryBoy();
+			managedeliveryboypage.addName(name);
+			managedeliveryboypage.addUserName(username);
+			managedeliveryboypage.createPassword(password);
+			managedeliveryboypage.clickonSaveButton();
 		
-		String expectedText="Search List Delivery Boy";
-		String actualText=managedeliveryboypage.getTextOfSearchDeliveryBoy();
-		Assert.assertEquals(actualText, expectedText);
-	}
-	
-	@Test
-	public void verifySearchReset()
-	{
-		managedeliveryboypage = new ManageDeliveryBoyPage(driver);
-		loginPage = new LoginPage(driver);
-		loginPage.login();
-		managedeliveryboypage.verifyManageDeliveryBoy();
-		managedeliveryboypage.verifyClickSearchButton("Eldriya");
-		managedeliveryboypage.verifyResetButton();
+			
+			boolean actualResult=managedeliveryboypage.checkDeliveryBoyRegisterAlertMsg("Delivery Boy Details Created Successfully");
+			Assert.assertTrue(actualResult);
+		}
+
 		
-		String expectedText="List Delivery Boy";
-		String actualText=managedeliveryboypage.getTextOfHeadingListDeliveryBoy();
-		Assert.assertEquals(actualText, expectedText);
+		@Test
+		public void verifySearchButtonFeatures()
+		{
+			managedeliveryboypage = new ManageDeliveryBoyPage(driver);
+			loginPage = new LoginPage(driver);
+			loginPage.login();
+			managedeliveryboypage.clickManageDeliveryBoy();
+			managedeliveryboypage.ClickSearchButton("name6");
+			
+			String expectedText="Search List Delivery Boy";
+			String actualText=managedeliveryboypage.getTextOfSearchDeliveryBoy();
+			Assert.assertEquals(actualText, expectedText);
+		}
 		
-	}
-	
-	public void verify_ClickNameDelete()
-	{
-		loginPage = new LoginPage(driver);
-		loginPage.login();
-		managedeliveryboypage=new ManageDeliveryBoyPage(driver);
-		managedeliveryboypage.verifyManageDeliveryBoy();
-		managedeliveryboypage.deleteDeliveryBoy("client29/12/2023 11:52:17");
-		
-	}
-	public void verify_editUser()
-	{
-		loginPage = new LoginPage(driver);
-		loginPage.login();
-		managedeliveryboypage=new ManageDeliveryBoyPage(driver);
-		managedeliveryboypage.verifyManageDeliveryBoy();
-		managedeliveryboypage.editUser("client29/12/2023 11:43:43");
-		
-	}
-	
+		@Test
+		public void verifySearchReset()
+		{
+			managedeliveryboypage = new ManageDeliveryBoyPage(driver);
+			loginPage = new LoginPage(driver);
+			loginPage.login();
+			managedeliveryboypage.clickManageDeliveryBoy();
+			managedeliveryboypage.ClickSearchButton("Eldriya");
+			managedeliveryboypage.clickResetButtonInsideSearch();
+			
+			String expectedText="List Delivery Boy";
+			String actualText=managedeliveryboypage.getTextOfHeadingListDeliveryBoy();
+			Assert.assertEquals(actualText, expectedText);
+			
+		}
+		@Test
+		public void verify_NameDelete()
+		{
+			loginPage = new LoginPage(driver);
+			loginPage.login();
+			managedeliveryboypage=new ManageDeliveryBoyPage(driver);
+			managedeliveryboypage.clickManageDeliveryBoy();
+			managedeliveryboypage.deleteDeliveryBoy("Velva Cruickshank");
+			
+			boolean actualResult=managedeliveryboypage.checkDeliveryBoyRegisterAlertMsg("Delivery Boy Informations Deleted Successfully");
+			Assert.assertTrue(actualResult);
+			
+		}
+		@Test
+		public void verify_editUser()
+		{
+			loginPage = new LoginPage(driver);
+			loginPage.login();
+			managedeliveryboypage=new ManageDeliveryBoyPage(driver);
+			managedeliveryboypage.clickManageDeliveryBoy();
+			managedeliveryboypage.editUser("Trudie McGlynn");
+			
+			String expectedText="Edit-Delivery Boy";
+			String actualText=managedeliveryboypage.getTextOfHeadingEditDeliveryBoy();
+			Assert.assertEquals(actualText, expectedText);
+			
+		}
 }
+

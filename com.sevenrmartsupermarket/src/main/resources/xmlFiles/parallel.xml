@@ -1,4 +1,8 @@
 <suite name="ParallelExecution" thread-count="5" parallel="tests">
+	<listeners>
+		<listener
+			class-name="com.sevenrmartsupermarket.listeners.ExtentReporter"></listener>
+	</listeners>
 	<test name="SmokeRun">
 		<classes>
 			<class name="com.sevenrmartsupermarket.tests.ManageDeliveryBoyTest"></class>

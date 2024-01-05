@@ -19,6 +19,7 @@ public class LoginTest extends Base
 		homepage=new HomePage(driver) ;
 		String expectedProfileName="Admin";
 		loginPage.login();
+		
 		String actualProfileName=homepage.getProfileName();
 		Assert.assertEquals(actualProfileName, expectedProfileName);;
 		
@@ -29,6 +30,7 @@ public class LoginTest extends Base
 	{
 		loginPage=new LoginPage(driver);
 		loginPage.login("abc","xyz");
+		
 		boolean actualResult=loginPage.checkErrorMsg("Invalid Username/Password");
 		ScreenShot screenshot=new ScreenShot();
 		screenshot.takeScreenShot(driver, "Rincy");

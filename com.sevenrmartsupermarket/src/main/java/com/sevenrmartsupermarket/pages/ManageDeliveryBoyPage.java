@@ -66,13 +66,16 @@ public class ManageDeliveryBoyPage {
 	@FindBy(xpath="//h1[text()='List Delivery Boy']")
 	WebElement EditDeliveryBoy;
 	
+	@FindBy(xpath = "//div[@class='alert alert-success alert-dismissible']")
+	WebElement DeleteAlert;
+	
 
 	public ManageDeliveryBoyPage(WebDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 	}
 
-	public void verifyManageDeliveryBoy() {
+	public void clickManageDeliveryBoy() {
 		manageDeliveryBoyField.click();
 		
 	}
@@ -81,15 +84,15 @@ public class ManageDeliveryBoyPage {
 		newButton.click();	
 	}
 
-	public void verifyName(String namefield) {
+	public void addName(String namefield) {
 		newName.sendKeys(namefield);
 	}
 
-	public void verifyUserName(String userNamefield) {
+	public void addUserName(String userNamefield) {
 		newUserName.sendKeys(userNamefield);
 	}
 
-	public void verifyPassword(String passwordfield) {
+	public void createPassword(String passwordfield) {
 		newPassword.sendKeys(passwordfield);
 
 	}
@@ -102,17 +105,14 @@ public class ManageDeliveryBoyPage {
 		
 	}
 
-	public boolean checkDeliveryBoyRegisterMsg(String message) {
-		generalutility = new GeneralUtility(driver);
-		return generalutility.isWordPresent(AlertMsg, message);
-	}
-	public void verifyClickSearchButton(String ToFindTheName)
+	
+	public void ClickSearchButton(String ToFindTheName)
 	{
 		SearchButton.click();
 		SearchName.sendKeys(ToFindTheName);	
 		clickSearch.click();
 	}
-	public void verifyResetButton()
+	public void clickResetButtonInsideSearch()
 	{
 	resetSearchElement.click();	
 	}
@@ -154,7 +154,18 @@ public class ManageDeliveryBoyPage {
 		}
 		WebElement editButton=driver.findElement(By.xpath("//table[@class='table table-bordered table-hover table-sm']//tbody//tr["+index+"]//td[8]//a[1]"));
 		pageutility.scrollAndClick(newPassword);
-	}	
+	}
+	
+	public String getTextOfHeadingAddDeliveryBoy()
+	{
+		return newButton.getText();
+	}
+	
+	public boolean checkDeliveryBoyRegisterAlertMsg(String message) {
+		generalutility = new GeneralUtility(driver);
+		return generalutility.isWordPresent(AlertMsg, message);
+	}
+	
 	public String getTextOfSearchDeliveryBoy()
 	{
 		return SearchDeliveryBoy.getText();
@@ -165,5 +176,14 @@ public class ManageDeliveryBoyPage {
 		return ListDeliveryBoy.getText();
 	}
 	
+	public boolean alertDeleteMessage(String message)
+	{
+		generalutility=new GeneralUtility(driver);
+		return generalutility.isWordPresent(DeleteAlert,message);	
+	}
 	
+	public String getTextOfHeadingEditDeliveryBoy()
+	{
+		return EditDeliveryBoy.getText();
+	}
 }

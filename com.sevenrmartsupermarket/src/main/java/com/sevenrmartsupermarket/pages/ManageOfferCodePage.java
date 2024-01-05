@@ -54,8 +54,10 @@ public class ManageOfferCodePage
 	  WebElement clickSearch;
 		
 	  @FindBy(xpath="//a[text()=' Reset']")
-	  WebElement resetSearchElement;
+	  WebElement ResetButton;
 		
+	  @FindBy(xpath = "//div[@class='alert alert-success alert-dismissible']")
+	  WebElement OfferCreatedAlert;
 	  
 	  public ManageOfferCodePage(WebDriver driver) {
 	    this.driver=driver;
@@ -93,18 +95,26 @@ public class ManageOfferCodePage
 	 		
 	 	}
 	     
-	     public void verifyClickSearchButton(String enterOfferCode)
+	     public void ClickSearchButton(String enterOfferCode)
 	 	{
 	 		SearchButton.click();
 	 		OfferCode.sendKeys(enterOfferCode);	
 	 		clickSearch.click();
 	 	}
-	 	public void verifyResetButton()
+	 	public void clickReset()
 	 	{
-	 	resetSearchElement.click();	
+	 		ResetButton.click();	
 	 	}
-	 	public void verifyEditButton()
-	 	{
-	 	resetSearchElement.click();	
-	 	}
+	 	
+	 	public boolean OfferCreatedAlert(String message)
+		{
+			generalutility=new GeneralUtility(driver);
+			return generalutility.isWordPresent(OfferCreatedAlert,message);	
+		}
+		
+	 	public String getTextOfHeadingSearchListOfferCode()
+		{
+			return SearchButton.getText();
+		}
+	 	
 }

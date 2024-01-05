@@ -1,5 +1,6 @@
 package com.sevenrmartsupermarket.tests;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import com.sevenrmartsupermarket.base.Base;
 import com.sevenrmartsupermarket.pages.LoginPage;
@@ -20,7 +21,6 @@ public class ManageLocationTest extends Base
 		loginPage = new LoginPage(driver);
 		loginPage.login();
 		managelocationpage=new ManageLocationPage(driver);
-		
 		managelocationpage.scrollAndClickManageLocationPage();
 		
 	}
@@ -31,11 +31,14 @@ public class ManageLocationTest extends Base
 		loginPage.login();
 		managelocationpage=new ManageLocationPage(driver);
 		
-	
 		managelocationpage.scrollAndClickManageLocationPage();
-		managelocationpage.verifyAddNewLocationPage();
-		managelocationpage.verifyCountry();
-		managelocationpage.verifyState();
+		managelocationpage.clikAddNewLocation();
+		managelocationpage.selectCountry();
+		managelocationpage.selectState();
+		
+		String expectedText="Add Locations";
+		String actualText=managelocationpage.getTextOfHeadingAddLocation();
+		Assert.assertEquals(actualText, expectedText);
 	}
 	@Test(dataProvider = "Location",dataProviderClass =ManageLocationDataProvider.class)
 	public void verifyLocation(String location,String Amt)
@@ -45,11 +48,14 @@ public class ManageLocationTest extends Base
 		managelocationpage=new ManageLocationPage(driver);
 		
 		managelocationpage.scrollAndClickManageLocationPage();
-		managelocationpage.verifyAddNewLocationPage();
-		managelocationpage.verifyCountry();
-		managelocationpage.verifyState();
+		managelocationpage.clikAddNewLocation();
+		managelocationpage.selectCountry();
+		managelocationpage.selectState();
 		managelocationpage.verifyLocationAndDeliveryCharge(location,Amt);
 		managelocationpage.scrollAndSave();
+		
+		boolean actualResult=managelocationpage.alertLocationCreated("Location Created Successfully");
+		Assert.assertTrue(actualResult);
 	}
 	
 }
